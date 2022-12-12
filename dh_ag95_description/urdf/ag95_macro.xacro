@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find dh_ag95_description)/urdf/ag95_transmissions.xacro" />
+  <xacro:include filename="$(find dh_ag95_description)/urdf/ag95_gazebo.xacro" />
+
+  <xacro:macro name="dh_ag95_gripper" params="
+    prefix 
+    parent
+    transmission_hw_interface:=hardware/interface/EffortJointInterface
+    *origin"
+  >
+
+    <!-- Add URDF transmission elements (for ros_control) -->
+    <xacro:ag95_transmission prefix="${prefix}" hw_interface="${transmission_hw_interface}"/>
+    <xacro:ag95_gazebo prefix="${prefix}" />
+
+
+    <material name="silver">
+      <color rgba="0.700 0.700 0.700 1.000"/>
+    </material>
+
+    <!-- fingers links macros -->
+    <xacro:macro name="outer_knuckle" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_outer_knuckle">
+        <inertial>
+          <origin xyz="0.01942051923332104 0.01484994909356397 -0.0012758855166676575" rpy="0 0 0" />
+          <mass value="0.031039622207547142" />
+          <inertia ixx="9e-06" iyy="5e-06" izz="1.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0" />
+        </inertial>
+        <visual>
+          <origin xyz="-0.016 0.0143 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/outer_knuckle_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+          <material name="silver" />
+        </visual>
+        <collision>
+          <origin xyz="-0.016 0.0143 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/outer_knuckle_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+        </collision>
+      </link>
+    </xacro:macro>
+
+    <xacro:macro name="outer_finger" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_outer_finger">
+        <inertial>
+          <origin xyz="-0.001789587662337111 0.01430000102015136 -0.026016921024424072" rpy="0 0 0" />
+          <mass value="0.0622610255147208" />
+          <inertia ixx="2.7e-05" iyy="2e-05" izz="7e-06" ixy="-0.0" iyz="-0.0" ixz="0.0" />
+        </inertial>
+        <visual>
+          <origin xyz="-0.053 0.0143 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/outer_finger_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+          <material name="silver" />
+        </visual>
+        <collision>
+          <origin xyz="-0.053 0.0143 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/outer_finger_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+        </collision>
+      </link>
+    </xacro:macro>
+
+    <xacro:macro name="inner_knuckle" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_inner_knuckle">
+        <inertial>
+          <origin xyz="-0.0014206097887426213 -6.706406263656817e-13 0.02319155456860915" rpy="0 0 0" />
+          <mass value="0.08883743882489147" />
+          <inertia ixx="5.3e-05" iyy="2.9e-05" izz="2.5e-05" ixy="0.0" iyz="-0.0" ixz="1e-06" />
+        </inertial>
+        <visual>
+          <origin xyz="-0.016 0.014 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_knuckle_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+          <material name="silver" />
+        </visual>
+        <collision>
+          <origin xyz="-0.016 0.014 -0.10586" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_knuckle_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+        </collision>
+      </link>
+    </xacro:macro>
+
+    <xacro:macro name="inner_finger" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_inner_finger">
+        <inertial>
+          <origin xyz="-0.004366516626586402 0.008750000000007495 0.0038957490472617817" rpy="0 0 0" />
+          <mass value="0.035304126564626004" />
+          <inertia ixx="2e-06" iyy="4e-06" izz="3e-06" ixy="0.0" iyz="-0.0" ixz="1e-06" />
+        </inertial>
+        <visual>
+          <origin xyz="-0.0525 0.0093 -0.045032" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_finger_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+          <material name="silver" />
+        </visual>
+        <collision>
+          <origin xyz="-0.0525 0.0093 -0.045032" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_finger_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+        </collision>
+      </link>
+    </xacro:macro>
+
+    <!-- Finger pad link, the default are the "big pads" with rubber-->
+    <xacro:macro name="inner_finger_pad" params="prefix fingerprefix">
+      <link name="${prefix}${fingerprefix}_inner_finger_pad">
+        <inertial>
+          <origin xyz="-0.0022698535982203644 3.127772563518705e-13 0.007791035710655703" rpy="0 0 0" />
+          <mass value="0.047823655444711066" />
+          <inertia ixx="5e-06" iyy="4e-06" izz="2e-06" ixy="-0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual>
+          <origin xyz="-0.040724 0.00055 -0.063836" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_finger_pad_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+          <material name="silver" />
+        </visual>
+        <collision>
+          <origin xyz="-0.040724 0.00055 -0.063836" rpy="0 0 0" />
+          <geometry>
+            <mesh filename="package://dh_ag95_description/meshes/inner_finger_pad_1.stl" scale="0.001 0.001 0.001" />
+          </geometry>
+        </collision>
+      </link>
+    </xacro:macro>
+
+    <xacro:macro name="finger_links" params="prefix fingerprefix">
+      <xacro:outer_knuckle prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:outer_finger prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:inner_finger prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:inner_finger_pad prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:inner_knuckle prefix="${prefix}" fingerprefix="${fingerprefix}" />
+    </xacro:macro>
+
+
+    <!-- fingers joints macros -->
+    <xacro:macro name="outer_finger_joint" params="prefix fingerprefix">
+      <joint name="${prefix}${fingerprefix}_outer_finger_joint" type="revolute">
+        <origin xyz="0.037 0.0005 0.0" rpy="0 ${-(180 + (90-72.7)) * pi / 180} 0" />
+        <parent link="${prefix}${fingerprefix}_outer_knuckle" />
+        <child link="${prefix}${fingerprefix}_outer_finger" />
+        <axis xyz="-0.0 1.0 0.0" />
+        <limit lower="${-0.29665623-0.01}" upper="0.01" velocity="0.5" effort="1000" />
+        <mimic joint="${prefix}finger_joint" multiplier="-0.4563942" offset="0" />
+      </joint>
+    </xacro:macro>
+
+    <xacro:macro name="inner_knuckle_joint" params="prefix fingerprefix reflect">
+      <joint name="${prefix}${fingerprefix}_inner_knuckle_joint" type="revolute">
+        <origin xyz="${(-1 + reflect)/(-2)*(0.0565 - 0.032) + (1 + reflect)/(2)*(0.0565)} ${0.0003+0.014} 0.09116" rpy="0 ${(45.8) * pi / 180} ${(-1 + reflect) * pi / 2}" />
+        <parent link="${prefix}ag95_body" />
+        <child link="${prefix}${fingerprefix}_inner_knuckle" />
+        <axis xyz="0.0 -1.0 -0.0" />
+        <limit lower="-0.01" upper="${0.9425 + 0.01}" velocity="0.5" effort="1000" />
+        <mimic joint="${prefix}finger_joint" multiplier="1.45" offset="0" />
+      </joint>
+    </xacro:macro>
+
+
+    <xacro:macro name="inner_finger_joint" params="prefix fingerprefix">
+      <joint name="${prefix}${fingerprefix}_inner_finger_joint" type="revolute">
+        <origin xyz="-0.0005 ${0.005+0.0005} -0.060828" rpy="0 ${(180-20.207) * pi / 180} 0" />
+        <parent link="${prefix}${fingerprefix}_outer_finger" />
+        <child link="${prefix}${fingerprefix}_inner_finger" />
+        <axis xyz="-0.0 1.0 0.0" />
+        <limit lower="-0.01" upper="${0.949 + 0.01}" velocity="0.5" effort="1000" />
+        <mimic joint="${prefix}finger_joint" multiplier="1.46" offset="0" />
+      </joint>
+    </xacro:macro>
+
+    <xacro:macro name="inner_finger_pad_joint" params="prefix fingerprefix">
+      <joint name="${prefix}${fingerprefix}_inner_finger_pad_joint" type="fixed">
+        <origin xyz="-0.011776 0.00875 0.018804" rpy="0 0 0" />
+        <parent link="${prefix}${fingerprefix}_inner_finger" />
+        <child link="${prefix}${fingerprefix}_inner_finger_pad" />
+      </joint>
+    </xacro:macro>
+
+    <xacro:macro name="finger_joints" params="prefix fingerprefix reflect">
+      <xacro:outer_finger_joint prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:inner_knuckle_joint prefix="${prefix}" fingerprefix="${fingerprefix}" reflect="${reflect}" />
+      <xacro:inner_finger_joint prefix="${prefix}" fingerprefix="${fingerprefix}" />
+      <xacro:inner_finger_pad_joint prefix="${prefix}" fingerprefix="${fingerprefix}" />
+    </xacro:macro>
+
+    <!-- base link flange -->
+    <link name="${prefix}ag95_base_link">
+      <inertial>
+        <origin xyz="7.892486664218268e-13 9.73814800116557e-05 0.0030311891257515876" rpy="0 0 0" />
+        <mass value="0.18321316702693136" />
+        <inertia ixx="4e-05" iyy="0.000121" izz="0.000158" ixy="0.0" iyz="0.0" ixz="-0.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://dh_ag95_description/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="silver" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://dh_ag95_description/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- main body of gripper -->
+    <link name="${prefix}ag95_body">
+      <inertial>
+        <origin xyz="0.04036062747002087 0.014263277456143336 0.04309240127181908" rpy="0 0 0" />
+        <mass value="2.6431911896663203" />
+        <inertia ixx="0.003762" iyy="0.004367" izz="0.001544" ixy="-3e-06" iyz="-2e-06" ixz="-9e-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0.0405 0.0143 -0.0147" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://dh_ag95_description/meshes/gripper_body_1.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="silver" />
+      </visual>
+      <collision>
+        <origin xyz="0.0405 0.0143 -0.0147" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://dh_ag95_description/meshes/gripper_body_1.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}ag95_body_joint" type="fixed">
+      <origin xyz="-0.0405 -0.0143 0.0147" rpy="0 0 0" />
+      <parent link="${prefix}ag95_base_link" />
+      <child link="${prefix}ag95_body" />
+    </joint>
+
+
+    <!-- left finger -->
+    <xacro:finger_links prefix="${prefix}" fingerprefix="left" />
+    <xacro:finger_joints prefix="${prefix}" fingerprefix="left" reflect="1.0" />
+    <joint name="${prefix}finger_joint" type="revolute">
+      <origin xyz="0.0565 -0.0005 0.09116" rpy="0 ${37.211*pi/180} 0" />
+      <parent link="${prefix}ag95_body" />
+      <child link="${prefix}left_outer_knuckle" />
+      <axis xyz="0.0 -1.0 -0.0" />
+      <limit lower="0.0" upper="0.65" velocity="0.5" effort="1000" />
+    </joint>
+
+    <!-- right finger -->
+    <xacro:finger_joints prefix="${prefix}" fingerprefix="right" reflect="-1.0"/>
+    <xacro:finger_links prefix="${prefix}" fingerprefix="right"/>
+    <joint name="${prefix}right_finger_joint" type="revolute">
+      <origin xyz="${0.0565 - 0.032} ${-0.0005+0.02948} 0.09116" rpy="0 ${37.211*pi/180} ${pi}"/>
+      <parent link="${prefix}ag95_body" />
+      <child link="${prefix}right_outer_knuckle" />
+      <axis xyz="0.0 -1.0 -0.0" />
+      <limit lower="-0.01" upper="0.66" velocity="0.5" effort="1000" />
+      <mimic joint="${prefix}finger_joint" multiplier="1" offset="0" />
+    </joint>
+
+
+    <joint name="${prefix}gripper_base_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}ag95_base_link"/>
+      <xacro:insert_block name="origin"/>
+  </joint>
+
+  </xacro:macro>
+
+</robot>
