@@ -49,7 +49,7 @@
       <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="${prefix}left_outer_knuckle">
-      <material>Gazebo/Grey</material>
+      <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="${prefix}left_outer_finger">
       <material>Gazebo/Black</material>
@@ -61,7 +61,7 @@
       <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="${prefix}right_outer_knuckle">
-      <material>Gazebo/Grey</material>
+      <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="${prefix}right_outer_finger">
       <material>Gazebo/Black</material>
@@ -71,6 +71,12 @@
     </gazebo>
     <gazebo reference="${prefix}right_inner_knuckle">
       <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="${prefix}left_inner_finger_pad">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+    <gazebo reference="${prefix}right_inner_finger_pad">
+      <material>Gazebo/Grey</material>
     </gazebo>
     
   

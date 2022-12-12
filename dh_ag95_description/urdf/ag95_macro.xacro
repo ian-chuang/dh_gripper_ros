@@ -33,7 +33,9 @@
           <geometry>
             <mesh filename="package://dh_ag95_description/meshes/outer_knuckle_1.stl" scale="0.001 0.001 0.001" />
           </geometry>
-          <material name="silver" />
+          <material name="">
+            <color rgba="0.1 0.1 0.1 1" />
+          </material>
         </visual>
         <collision>
           <origin xyz="-0.016 0.0143 -0.10586" rpy="0 0 0" />
@@ -56,7 +58,9 @@
           <geometry>
             <mesh filename="package://dh_ag95_description/meshes/outer_finger_1.stl" scale="0.001 0.001 0.001" />
           </geometry>
-          <material name="silver" />
+          <material name="">
+            <color rgba="0.1 0.1 0.1 1" />
+          </material>
         </visual>
         <collision>
           <origin xyz="-0.053 0.0143 -0.10586" rpy="0 0 0" />
@@ -79,7 +83,9 @@
           <geometry>
             <mesh filename="package://dh_ag95_description/meshes/inner_knuckle_1.stl" scale="0.001 0.001 0.001" />
           </geometry>
-          <material name="silver" />
+          <material name="">
+            <color rgba="0.1 0.1 0.1 1" />
+          </material>
         </visual>
         <collision>
           <origin xyz="-0.016 0.014 -0.10586" rpy="0 0 0" />
@@ -102,7 +108,9 @@
           <geometry>
             <mesh filename="package://dh_ag95_description/meshes/inner_finger_1.stl" scale="0.001 0.001 0.001" />
           </geometry>
-          <material name="silver" />
+          <material name="">
+            <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          </material>
         </visual>
         <collision>
           <origin xyz="-0.0525 0.0093 -0.045032" rpy="0 0 0" />
@@ -126,7 +134,9 @@
           <geometry>
             <mesh filename="package://dh_ag95_description/meshes/inner_finger_pad_1.stl" scale="0.001 0.001 0.001" />
           </geometry>
-          <material name="silver" />
+          <material name="">
+            <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          </material>
         </visual>
         <collision>
           <origin xyz="-0.040724 0.00055 -0.063836" rpy="0 0 0" />
@@ -208,7 +218,9 @@
         <geometry>
           <mesh filename="package://dh_ag95_description/meshes/base_link.stl" scale="0.001 0.001 0.001" />
         </geometry>
-        <material name="silver" />
+        <material name="">
+          <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -230,7 +242,9 @@
         <geometry>
           <mesh filename="package://dh_ag95_description/meshes/gripper_body_1.stl" scale="0.001 0.001 0.001" />
         </geometry>
-        <material name="silver" />
+        <material name="">
+          <color rgba="0.1 0.1 0.1 1" />
+        </material>
       </visual>
       <collision>
         <origin xyz="0.0405 0.0143 -0.0147" rpy="0 0 0" />

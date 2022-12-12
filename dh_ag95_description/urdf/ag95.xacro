@@ -9,15 +9,13 @@
     <!-- gripper -->
     <xacro:dh_ag95_gripper
         prefix=""
-        transmission_hw_interface="$(arg transmission_hw_interface)" />
+        transmission_hw_interface="$(arg transmission_hw_interface)" parent="world">
+        <origin xyz="0 0 0.1" rpy="0 0 0" />
+    </xacro:dh_ag95_gripper>
 
 
     <link name="world" />
-    <joint name="world_joint" type="fixed">
-        <origin xyz="0 0 0.1" rpy="0 0 0" />
-        <parent link="world" />
-        <child link="ag95_base_link" />
-    </joint>
+
 
 
     <gazebo>
