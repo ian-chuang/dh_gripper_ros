@@ -8,6 +8,7 @@
       </joint>
       <actuator name="${prefix}finger_joint_motor">
         <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>${hw_interface}</hardwareInterface>
       </actuator>
     </transmission>
   </xacro:macro>

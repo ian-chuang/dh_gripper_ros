@@ -4,7 +4,7 @@
     <xacro:include filename="$(find dh_ag95_description)/urdf/ag95_macro.xacro" />
 
     <!-- parameters -->
-    <xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface" />
+    <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
 
     <!-- gripper -->
     <xacro:dh_ag95_gripper

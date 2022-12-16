@@ -3,7 +3,7 @@ joint_state_controller:
   publish_rate: &loop_hz 125
 
 gripper_controller:
-  type: effort_controllers/GripperActionController
+  type: position_controllers/GripperActionController
   gains:
     finger_joint: {p: 10,  d: 0.1, i: 1, i_clamp: 1}
   joint: finger_joint
@@ -12,3 +12,7 @@ gripper_controller:
   max_effort: 100
   stall_velocity_threshold: 0.001
   stall_timeout: 1.0
+
+gazebo_ros_control:
+  pid_gains:
+    finger_joint: {p: 10.0, i: 1, d: 0.01}
