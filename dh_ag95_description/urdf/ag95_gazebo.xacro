@@ -7,50 +7,36 @@
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}left_outer_finger_joint</mimicJoint>
         <multiplier>-0.4563942</multiplier>
-        <hasPID />
-        <maxEffort>100</maxEffort>
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_2">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}left_inner_knuckle_joint</mimicJoint>
         <multiplier>1.45</multiplier>
-        <!-- <hasPID/>
-        <maxEffort>100</maxEffort> -->
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_3">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}left_inner_finger_joint</mimicJoint>
         <multiplier>1.46</multiplier>
-        <hasPID />
-        <maxEffort>100</maxEffort>
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_4">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}right_finger_joint</mimicJoint>
         <multiplier>1</multiplier>
-        <hasPID />
-        <maxEffort>100</maxEffort>
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_5">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}right_outer_finger_joint</mimicJoint>
         <multiplier>-0.4563942</multiplier>
-        <hasPID />
-        <maxEffort>100</maxEffort>
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_6">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}right_inner_knuckle_joint</mimicJoint>
         <multiplier>1.45</multiplier>
-        <!-- <hasPID/>
-        <maxEffort>100</maxEffort> -->
       </plugin>
       <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_dh_robotics_ag95_7">
         <joint>${prefix}finger_joint</joint>
         <mimicJoint>${prefix}right_inner_finger_joint</mimicJoint>
         <multiplier>1.46</multiplier>
-        <hasPID />
-        <maxEffort>100</maxEffort>
       </plugin>
     </gazebo>
 
@@ -66,9 +52,6 @@
     <gazebo reference="${prefix}left_outer_finger">
       <material>Gazebo/Black</material>
     </gazebo>
-    <gazebo reference="${prefix}left_inner_finger">
-      <material>Gazebo/Grey</material>
-    </gazebo>
     <gazebo reference="${prefix}left_inner_knuckle">
       <material>Gazebo/Black</material>
     </gazebo>
@@ -78,31 +61,16 @@
     <gazebo reference="${prefix}right_outer_finger">
       <material>Gazebo/Black</material>
     </gazebo>
-    <gazebo reference="${prefix}right_inner_finger">
-      <material>Gazebo/Grey</material>
-    </gazebo>
     <gazebo reference="${prefix}right_inner_knuckle">
       <material>Gazebo/Black</material>
     </gazebo>
-    <gazebo reference="${prefix}left_inner_finger_pad">
+
+
+    <gazebo reference="${prefix}left_inner_finger">
       <material>Gazebo/Grey</material>
-      <mu1>1000000</mu1>
-      <mu2>1000000</mu2>
-      <kp>100000000.0</kp>
-      <kd>10000000.0</kd>
-      <maxVel>0</maxVel>
-      <minDepth>0.001</minDepth>
-      <maxVel>0</maxVel>
     </gazebo>
-    <gazebo reference="${prefix}right_inner_finger_pad">
+    <gazebo reference="${prefix}right_inner_finger">
       <material>Gazebo/Grey</material>
-      <mu1>1000000</mu1>
-      <mu2>1000000</mu2>
-      <kp>100000000.0</kp>
-      <kd>10000000.0</kd>
-      <maxVel>0</maxVel>
-      <minDepth>0.001</minDepth>
-      <maxVel>0</maxVel>
     </gazebo>
 
 
