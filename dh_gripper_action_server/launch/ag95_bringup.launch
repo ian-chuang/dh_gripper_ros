@@ -2,19 +2,10 @@
 
 <launch>
     <arg name="GripperID" default="1"/>
-    <!--PGE-Series : PGE   
-        PGC-Series : PGC
-        CGC-Series : CGC
-        AG95 Modbus : AG95_MB
-        AG95 CAN    : AG95_CAN
-        DH3         : DH3
-        RGI-Series  : RGI
-    -->
     <arg name="GripperModel" default="AG95_MB"/>
     <arg name="Connectport" default="/dev/ttyUSB0"/>
     <arg name="Baudrate" default="115200"/>
 
-    <arg name="test_run" default="true"/>
 
     <node pkg="dh_gripper_driver" type="dh_gripper_driver" name="dh_gripper_driver" respawn="true" output="screen">
         <param name="Gripper_ID" type="string" value="$(arg GripperID)" />
@@ -23,8 +14,15 @@
         <param name="BaudRate"  type="string" value="$(arg Baudrate)" />
     </node>
 
-    <!-- <node pkg="dh_gripper_driver" type="dh_gripper_driver_test" name="dh_gripper_driver_test" output="screen" if="$(arg test_run)">
-        <param name="Gripper_Model" type="string" value="$(arg GripperModel)" />
-    </node> -->
+    <node pkg="dh_gripper_action_server" type="dh_gripper_action_server" name="dh_gripper_action_server" output="screen">
+        <param name="min_angle" type="double" value="0.0" />
+        <param name="max_angle" type="double" value="0.93" />
+        <param name="min_effort" type="double" value="20.0" />
+        <param name="max_effort" type="double" value="100.0" />
+        <param name="default_effort" type="double" value="100.0" />
+        <param name="speed" type="double" value="100.0" />
+        <param name="control_topic" type="str" value="gripper/ctrl" />
+        <param name="state_topic" type="str" value="gripper/states" />
+    </node>
 
 </launch>
