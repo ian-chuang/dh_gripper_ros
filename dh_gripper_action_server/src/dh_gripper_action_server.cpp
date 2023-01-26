@@ -14,6 +14,8 @@ DHGripperActionServer::DHGripperActionServer(const std::string& name, const DHGr
   , as_(nh_, name, false)
   , action_name_(name)
   , gripper_params_(params)
+  , is_initialized(false)
+  , position_goal(0)
 {
   as_.registerGoalCallback(boost::bind(&DHGripperActionServer::goalCB, this));
   as_.registerPreemptCallback(boost::bind(&DHGripperActionServer::preemptCB, this));
@@ -22,14 +24,12 @@ DHGripperActionServer::DHGripperActionServer(const std::string& name, const DHGr
   goal_pub_ = nh_.advertise<dh_gripper_msgs::GripperCtrl>(gripper_params_.control_topic_, 1);
 
   as_.start();
-
-  current_state_.is_initialized = false;
 }
 
 void DHGripperActionServer::goalCB()
 {
   // Check to see if the gripper is in an active state where it can take goals
-  if (current_state_.is_initialized == false)
+  if (is_initialized == false)
   {
     ROS_WARN("%s could not accept goal because the gripper is not yet active", action_name_.c_str());
     return;
@@ -46,7 +46,7 @@ void DHGripperActionServer::goalCB()
   {
     GripperCtrl ctrl_msg = goalToGripperCtrl(current_goal);
     goal_pub_.publish(ctrl_msg);
-    current_control = ctrl_msg;
+    position_goal = ctrl_msg.position;
   }
   catch (BadArgumentsError& e)
   {
@@ -62,7 +62,7 @@ void DHGripperActionServer::preemptCB()
 
 void DHGripperActionServer::stateCB(const GripperState::ConstPtr& msg)
 {
-  current_state_ = *msg;
+  is_initialized = msg->is_initialized;
 
   if (msg->is_initialized == false) {
     issueInitialization();
@@ -71,7 +71,7 @@ void DHGripperActionServer::stateCB(const GripperState::ConstPtr& msg)
 
   if (!as_.isActive()) return;
 
-  if (msg->position == current_control.position)
+  if (msg->position == position_goal)
   {
     ROS_INFO("%s succeeded (reached target position)", action_name_.c_str());
     GripperCommandResult result;

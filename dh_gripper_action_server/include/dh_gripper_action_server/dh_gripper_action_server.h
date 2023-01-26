@@ -16,8 +16,6 @@
 // Repo specific includes
 #include <dh_gripper_msgs/GripperCtrl.h>
 #include <dh_gripper_msgs/GripperState.h>
-// #include <mutex.h>
-
 
 namespace dh_gripper_action_server
 {
@@ -91,9 +89,8 @@ private:
   ros::Subscriber state_sub_; // Subs to grippers "input" topic
   ros::Publisher goal_pub_; // Pubs to grippers "output" topic
 
-  // std::mutex current_state_mutex_;
-  GripperCtrl current_control;
-  GripperState current_state_; // gripper state info
+  std::atomic<double> position_goal;
+  std::atomic<bool> is_initialized;
 
   /* Used to translate GripperCommands in engineering units
    * to/from register states understood by gripper itself. Different
