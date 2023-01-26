@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   control_msgs
   dh_gripper_msgs
   roscpp
+  sensor_msgs
 )
 
 catkin_package(
@@ -23,6 +24,7 @@ catkin_package(
   control_msgs
   dh_gripper_msgs
   roscpp
+  sensor_msgs
 )
 
 

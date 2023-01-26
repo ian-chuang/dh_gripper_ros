@@ -21,8 +21,11 @@
         <param name="max_effort" type="double" value="100.0" />
         <param name="default_effort" type="double" value="100.0" />
         <param name="speed" type="double" value="100.0" />
+        <param name="action_server_name" type="str" value="gripper_controller/gripper_cmd" />
         <param name="control_topic" type="str" value="gripper/ctrl" />
         <param name="state_topic" type="str" value="gripper/states" />
+        <param name="joint_states_topic" type="str" value="joint_states" />
+        <param name="joint_name" type="str" value="left_outer_knuckle_joint" />
     </node>
 
 </launch>

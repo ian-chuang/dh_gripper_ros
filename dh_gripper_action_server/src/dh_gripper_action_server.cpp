@@ -22,6 +22,7 @@ DHGripperActionServer::DHGripperActionServer(const std::string& name, const DHGr
 
   state_sub_ = nh_.subscribe(gripper_params_.state_topic_, 1, &DHGripperActionServer::stateCB, this);
   goal_pub_ = nh_.advertise<dh_gripper_msgs::GripperCtrl>(gripper_params_.control_topic_, 1);
+  joint_states_pub_ = nh_.advertise<sensor_msgs::JointState>(gripper_params_.joint_states_topic_, 1);
 
   as_.start();
 }
@@ -69,7 +70,11 @@ void DHGripperActionServer::stateCB(const GripperState::ConstPtr& msg)
     return;
   }
 
+  publishJointStates(msg);
+
   if (!as_.isActive()) return;
+
+  std::cout << "ACTIVE: " << msg->position << ", " << position_goal << std::endl;
 
   if (msg->position == position_goal)
   {
@@ -119,12 +124,14 @@ GripperCtrl DHGripperActionServer::goalToGripperCtrl(GripperCommandGoal goal) {
     throw BadArgumentsError();
   }
 
-  double gripper_ctrl_position = 
-    MAX_POSITION - 
-    (angle - gripper_params_.min_angle_) * 
-    (MAX_POSITION - MIN_POSITION) / 
-    (gripper_params_.max_angle_ - gripper_params_.min_angle_) 
-    + MIN_POSITION;
+  double gripper_ctrl_position = mapRange(
+    angle,
+    gripper_params_.min_angle_,
+    gripper_params_.max_angle_,
+    MIN_POSITION,
+    MAX_POSITION,
+    true
+  );
 
   GripperCtrl ctrl_msg;
   ctrl_msg.initialize = false;
@@ -133,6 +140,28 @@ GripperCtrl DHGripperActionServer::goalToGripperCtrl(GripperCommandGoal goal) {
   ctrl_msg.speed = gripper_params_.speed_;
 
   return ctrl_msg;
+}
+
+void DHGripperActionServer::publishJointStates(const GripperState::ConstPtr& gripper_state) {
+  double position_radians = mapRange(
+    gripper_state->position,
+    MIN_POSITION,
+    MAX_POSITION,
+    gripper_params_.min_angle_,
+    gripper_params_.max_angle_,
+    true
+  );
+
+  sensor_msgs::JointState msg;
+  msg.name.resize(1);
+  msg.position.resize(1);
+
+  msg.header.frame_id = "";
+  msg.header.stamp = ros::Time::now();
+  msg.position.at(0) = position_radians;
+  msg.name.at(0) = gripper_params_.joint_name_; 
+
+  joint_states_pub_.publish(msg);
 }
 
 void DHGripperActionServer::issueInitialization()
@@ -145,4 +174,13 @@ void DHGripperActionServer::issueInitialization()
   ctrl_msg.speed = 0;
   goal_pub_.publish(ctrl_msg);
 }
+
+double DHGripperActionServer::mapRange(double val, double prev_min, double prev_max, double new_min, double new_max, bool reverse) {
+  double ret = (val - prev_min) * (new_max - new_min) / (prev_max - prev_min) + new_min;
+  if (reverse) {
+    ret = new_max - ret;
+  }
+  return ret;
+}
+
 } // end dh_gripper_action_server namespace
