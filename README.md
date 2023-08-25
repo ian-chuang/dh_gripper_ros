@@ -1,105 +1,39 @@
-#  Gripper controller 
+# DH Gripper ROS
 
-### Description
-This is the control interface for the  gripper. 
+![DH AG95 Gripper](insert_image_url_here)
 
+This repository is a fork of the original dh_gripper_ros package, featuring substantial enhancements and modifications for improved performance and functionality.
 
+## New Features
 
-------
+- **Gripper Action Server**: We've introduced a powerful gripper action server that facilitates seamless control of the DH AG95 gripper through MoveIt. This integration streamlines gripper control and enhances compatibility.
 
+- **Revamped URDF**: Our URDF model has undergone a significant overhaul. This includes a complete remodeling of both visual and collision meshes, resulting in a more accurate and realistic representation. The integration of new Gazebo support further enhances the overall experience.
 
+- **Gazebo Integration**: The AG95 Gripper URDF now incorporates a sophisticated 4-bar linkage simulation within Gazebo. This provides a dynamic and interactive environment for testing and experimentation.
 
-------
+## Optional Mimic Joint Plugin
 
+For users seeking an advanced feature, we offer an optional mimic joint plugin for synchronized control of both gripper fingers in Gazebo. To enable this feature, you can include the [roboticsgroup_upatras_gazebo_plugins](https://github.com/roboticsgroup/roboticsgroup_upatras_gazebo_plugins.git) repository in your workspace.
 
+## Usage
 
-### Installation
+To effectively utilize the gripper and its action server, execute the following command:
 
-1. Make sure you have already installed and Configured Your [ROS](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)  Environment
+```bash
+roslaunch dh_gripper_action_server dh_ag95_bringup.launch
+```
 
-2. Create and build a [catkin workspace](http://wiki.ros.org/catkin/workspaces): (you can skip this step , if you have already created it)
+For launching the Gazebo simulation of the gripper, use:
 
-   ```
-   $ mkdir -p ~/catkin_ws/src
-   $ cd ~/catkin_ws/
-   $ catkin_make
-   ```
+```bash
+roslaunch dh_ag95_description gazebo.launch
+```
 
-4. Clone the whole directory( `dh_gripper_driver_ros` ) to  your catkin's workspace src folder
+To visualize the URDF in RViz, initiate the following:
 
-5. Compile the code 
+```bash
+roslaunch dh_ag95_description display.launch
+```
 
-   ```
-   $ cd ~/catkin_ws/
-   $ catkin_make
-   ```
-
-6. Add the path including to the `ROS_PACKAGE_PATH` environment variable. Open `~/.bashrc` file and add at the end the following line. 
-
-   ```
-   $ source ~/catkin_ws/devel/setup.bash
-   ```
-
-------
-
-
-
-### Instructions
-
-1. ##### Connect all hardware and Turn on the power
-
-2. ##### Modify launch file and Running controller
-
-   First , Modify the  `dh_gripper.launch` file in according to the product model 
-
-      ```
-       //gripperID default 1
-       <arg name="GripperID" default="1"/>
-       //gripper Model
-       <arg name="GripperModel" default="PGE"/>
-       //grippper USB Port Name
-       <arg name="Connectport" default="/dev/ttyUSB0"/>
-       //gripper Baudrate defalut : 115200
-       <arg name="Baudrate" default="115200"/>	
-      ```
-
-   Now , you can running controller
-
-   ```
-   $ roslaunch dh_gripper_driver dh_gripper.launch
-   ```
-
-   > If If it runs successfully , you will see the initialization of the gripper,and then auto close and open
-
-3. ##### Disable test run ,and use topic
-
-    Modify the  `dh_gripper.launch` file, and roslaunch `dh_gripper.launch`
-
-   ```
-     <arg name="test_run" default="false"/>
-   ```
-
-   use topic  to control
-   
-   ```
-   $rostopic pub /gripper/ctrl dh_gripper_msgs/GripperCtrl "initialize: false
-   position: 0.0
-   force: 100.0
-   speed: 100.0" 
-   ```
-
-4. ##### Study how to use it 
-
-   you can read the ` dh_gripper_Test.cpp`  in `/dh_hand_driver/src` folder to study
-
-5. ##### Enjoy it
-
-
-
-### gazebo7
-   $ sudo apt-get install ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control
-
-   ```
-   $ catkin_make
-
-
+We invite you to explore the enhanced capabilities of the DH AG95 gripper through this repository. Feel free to contribute, report issues, or provide feedback. Happy gripping!
