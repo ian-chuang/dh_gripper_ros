@@ -1,7 +1,5 @@
 # DH Gripper ROS
 
-![DH AG95 Gripper](insert_image_url_here)
-
 This repository is a fork of the original dh_gripper_ros package, featuring substantial enhancements and modifications for improved performance and functionality.
 
 ## New Features
