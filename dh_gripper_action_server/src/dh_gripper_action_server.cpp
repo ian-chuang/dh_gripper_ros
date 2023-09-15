@@ -74,8 +74,6 @@ void DHGripperActionServer::stateCB(const GripperState::ConstPtr& msg)
 
   if (!as_.isActive()) return;
 
-  std::cout << "ACTIVE: " << msg->position << ", " << position_goal << std::endl;
-
   if (msg->position == position_goal)
   {
     ROS_INFO("%s succeeded (reached target position)", action_name_.c_str());
@@ -131,13 +129,13 @@ GripperCtrl DHGripperActionServer::goalToGripperCtrl(GripperCommandGoal goal) {
     MIN_POSITION,
     MAX_POSITION,
     true
-  );
+  ); // this probably isn't very accurate in terms of the actual position of the gripper
 
   GripperCtrl ctrl_msg;
   ctrl_msg.initialize = false;
   ctrl_msg.position = gripper_ctrl_position;
   ctrl_msg.force = max_effort;
-  ctrl_msg.speed = gripper_params_.speed_;
+  // ctrl_msg.speed = gripper_params_.speed_; // speed doesn't seem to be used for ag95
 
   return ctrl_msg;
 }
